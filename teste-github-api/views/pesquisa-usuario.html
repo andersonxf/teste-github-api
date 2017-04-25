@@ -1,0 +1,61 @@
+<div >
+    <div class="row">
+        <div class="col-lg-7" ng-show="user.avatar_url">
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img ng-src="{{user.avatar_url}}" alt="" height="100" width="100" class="thumbnail"/>
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">Login: {{user.login}}</h4>
+                    <span>Id: {{user.id}}</span><br>
+                    <span ng-show="user.name">Nome: {{user.name}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3" ng-show="user.id">
+            <textarea name="obs" id="obs" cols="30" rows="3" placeholder="Digite seu comentário sobre este usuário" ng-model="anotacao"></textarea><br>
+            <button class="btn btn-primary" type="submit" ng-click="setAnotacao(user.id, anotacao)" ng-disabled="!nomeusuario">Salvar</button>
+        </div>
+        <div class="col-lg-2" ng-show="user.id">
+            <div class="alert alert-success" ng-show="gravacao == true">
+                Anotação gravada com sucesso!
+            </div>
+        </div>
+    </div>
+    <form role="form" name="busca-cliente" >
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="nomeusuario" placeholder="Digite um usuário GitHub para busca">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit" ng-click="getUsuario(nomeusuario)" ng-disabled="!nomeusuario">Buscar</button>
+                        </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+    </form>
+    <br >
+    <dir-pagination-controls
+            [max-size="1"]
+            [direction-links="true"]
+            [boundary-links="true"]
+            [auto-hide="true"] ng-hide="paginacao">
+    </dir-pagination-controls>
+    <ul class="list-group" >
+        <li class="list-group-item" dir-paginate="rep in repositorios | itemsPerPage: 5" >
+            <div class="row">
+                <div class="col-lg-10">
+                    <strong><a href="{{rep.html_url}}" target="_blank">{{rep.name}}</a></strong>
+                    <p>{{rep.description}}</p>
+                    <p class="small">
+                        Criado em : {{rep.created_at | date:'dd/MM/yyyy HH:mm'}}<br>
+                        Ultima atualização: {{rep.updated_at | date:'dd/MM/yyyy HH:mm'}}
+                    </p>
+                </div>
+                <div class="col-lg-2">Linguagem: {{rep.language}}</div>
+            </div>
+        </li>
+    </ul>
+</div>
